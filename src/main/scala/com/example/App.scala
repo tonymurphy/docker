@@ -20,7 +20,7 @@ object App extends StrictLogging {
 
     implicit val dockerClient = DockerClientBuilder.getInstance(dockerClientConfig).build()
 
-    DockerClientInfo.info()
+//    DockerClientInfo.info()
 
 //    val dockerImageLookup = DockerImageLookup(dockerClient)
 //

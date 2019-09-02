@@ -20,69 +20,359 @@
     <encoding>UTF-8</encoding>
     <scala.version>2.11.5</scala.version>
     <scala.compat.version>2.11</scala.compat.version>
+    <hikariCP.version>3.3.1</hikariCP.version>
+    <jackson.version>2.9.9</jackson.version>
+    <jersey.version>2.25.1</jersey.version>
+    <netty.version>4.1.39.Final</netty.version>
   </properties>
+
+
+  <dependencyManagement>
+
+    <dependencies>
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-reflect</artifactId>
+        <version>${scala.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.docker-java</groupId>
+        <artifactId>docker-java</artifactId>
+        <version>3.1.5</version>
+      </dependency>
+      <dependency>
+        <groupId>com.whisk</groupId>
+        <artifactId>docker-testkit-scalatest_2.11</artifactId>
+        <version>0.9.9</version>
+      </dependency>
+      <dependency>
+        <groupId>com.whisk</groupId>
+        <artifactId>docker-testkit-impl-docker-java_2.11</artifactId>
+        <version>0.9.9</version>
+      </dependency>
+      <dependency>
+        <groupId>com.whisk</groupId>
+        <artifactId>docker-testkit-impl-spotify_2.11</artifactId>
+        <version>0.9.9</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.26</version>
+      </dependency>
+
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.typesafe.scala-logging</groupId>
+        <artifactId>scala-logging_2.11</artifactId>
+        <version>3.9.2</version>
+      </dependency>
+
+      <!--Database -->
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>9.4-1201-jdbc41</version>
+      </dependency>
+      <dependency>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-core</artifactId>
+        <version>3.6.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>${hikariCP.version}</version>
+      </dependency>
+
+      <!-- Test -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.specs2</groupId>
+        <artifactId>specs2-core_${scala.compat.version}</artifactId>
+        <version>2.4.16</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest_${scala.compat.version}</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- Enforcer -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-json-provider</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-base</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.11</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.6</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>20.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-common</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.jersey.connectors</groupId>
+        <artifactId>jersey-apache-connector</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-compress</artifactId>
+        <version>1.18</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>4.4.11</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.8</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk15on</artifactId>
+        <version>1.60</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-buffer</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-codec</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-codec-http</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-codec-socks</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-common</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-handler</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-handler-proxy</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport-native-unix-common</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport-native-epoll</artifactId>
+        <version>${netty.version}</version>
+        <classifier>${os.detected.name}-${os.detected.arch}</classifier>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport-native-kqueue</artifactId>
+        <version>${netty.version}</version>
+        <classifier>${os.detected.name}-${os.detected.arch}</classifier>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.hk2</groupId>
+        <artifactId>hk2-locator</artifactId>
+        <version>2.5.0-b42</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.hk2</groupId>
+        <artifactId>hk2-api</artifactId>
+        <version>2.5.0-b42</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.hk2.external</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>2.5.0-b42</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
+
 
   <dependencies>
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
-      <version>${scala.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.whisk</groupId>
       <artifactId>docker-testkit-scalatest_2.11</artifactId>
-      <version>0.9.9</version>
     </dependency>
     <dependency>
       <groupId>com.whisk</groupId>
       <artifactId>docker-testkit-impl-docker-java_2.11</artifactId>
-      <version>0.9.9</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.whisk</groupId>
+      <artifactId>docker-testkit-impl-spotify_2.11</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-        <version>1.7.26</version>
     </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
     </dependency>
 
     <dependency>
       <groupId>com.typesafe.scala-logging</groupId>
       <artifactId>scala-logging_2.11</artifactId>
-        <version>3.9.2</version>
+    </dependency>
+
+    <!--Database -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
     </dependency>
 
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.specs2</groupId>
       <artifactId>specs2-core_${scala.compat.version}</artifactId>
-      <version>2.4.16</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_${scala.compat.version}</artifactId>
-      <version>2.2.4</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <testSourceDirectory>src/test/scala</testSourceDirectory>
+
+    <!-- Netty native support https://netty.io/wiki/native-transports.html -->
+    <extensions>
+      <extension>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.5.0.Final</version>
+      </extension>
+    </extensions>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0-M2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+
     <plugins>
       <plugin>
         <!-- see http://davidb.github.com/scala-maven-plugin -->
@@ -121,6 +411,27 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0-M2</version>
+        <executions>
+          <execution>
+            <id>enforce</id>
+            <configuration>
+              <rules>
+                <dependencyConvergence/> <!--note that if there is a space before the slash maven fails to read the configuration-->
+                <requireMavenVersion>
+                  <version>[3.0.9,)</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
